@@ -19,9 +19,25 @@ public class PackagedBoxes {
 	}
 
 	public Optional<Box> getAvailableBoxForSpecifiedSize(int size) {
+		Optional<Box> result = Optional.empty();
 
+		result = boxThatCanFullyFillWhithGivenSize(size);
+
+		if (!result.isPresent()) {
+
+			result = boxThatCanContainGivenSize(size);
+		}
+
+		return result;
+
+	}
+
+	private Optional<Box> boxThatCanContainGivenSize(int size) {
 		return boxes.stream().filter(x -> (x.getItemsSize() + size) <= Box.SIZE).findFirst();
+	}
 
+	private Optional<Box> boxThatCanFullyFillWhithGivenSize(int size) {
+		return boxes.stream().filter(x -> (x.getItemsSize() + size) == Box.SIZE).findFirst();
 	}
 
 	public int getNbOfBox() {

@@ -107,10 +107,25 @@ public class PackagingRobotServiceTest {
 		// assert
 
 		assertThat(res.get().getNbOfBox(), is(8));
-		// As the point of the exercice is the number of box, this is enought,
-		// but i have a difference of order
+		// As the point of the exercice is the number of box, this is enought (for now) but the robot is not fully optimized,
+		// i have a difference of order which can lead to more box if the input items are a lot more.
 		// expected : 163/82/46/19/8/55/73/7
 		// was : 163/81/46/82/9/55/73/7
+
+	}
+	
+	@Test
+	public void packageItems_shouldPackageInto2Box_when4ItemFullingLoad2Box(){
+		// arrange
+		String itemsFixture = "1892";
+
+		// act
+		Optional<PackagedBoxes> res = sut.packageItems(itemsFixture);
+
+		// assert
+
+		assertThat(res.get().getNbOfBox(), is(2));
+		assertThat(res.get().toString(), is("19/82"));
 	}
 
 }
